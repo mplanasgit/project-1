@@ -3,7 +3,9 @@
 Hello World! This is Marc Planas :)
 ```
 ---
-## Top-10 (deathliest) activities to avoid during *'Shark Season'* + Climate change
+## Top-10 (deathliest) activities to avoid during *'Shark Season'* 
+    Climate change is not a hoax
+
 ---
 The aim of this project was:
 1. To identify the top 10 activities (sports) in which most of the shark attacks occur and investigate their survivability.
@@ -22,7 +24,7 @@ The process described below was performed in the following jupyter notebook: `my
 
 The dimensions of the original dataset were: `25723 rows × 24 columns`, and almost all categories (columns) contained `~20,000 NaN` missing values. It also contained `2392 duplicated` reports (rows). Reports with `NaN` values in **all** columns and `duplicated` rows were dropped/removed, lowering the number of rows with potentially meaningful data to `6311`.
 
-After a closer inspection, it was decided to drop some of the categories that would not be useful for the scope of the analysis and which contained repetitive information. Columns dropped were: `pdf`, `href formula`, `href`, `original order`, `Unnamed: 22`, `Unnamed: 23`, `Case Number.1` and `Case Number.2`, lowering the number of columns to `16`. Then, reports in which **half** of the information was missing (i. e. **8** `NaN` values) were also dropped, since they were ruled not reliable. This resulted in a significantly cleaner and more trustworthy dataset, with `6302` reports. In addition, column headers were cleaned using the `strip()` method.
+After a closer inspection, it was decided to drop some of the categories that would not be useful for the scope of the analysis and which contained repetitive information. Columns dropped were: `pdf`, `href formula`, `href`, `original order`, `Unnamed: 22`, `Unnamed: 23`, `Case Number.1` and `Case Number.2`, lowering the number of columns to `16`. Then, reports in which **half** of the information was missing (i. e. `NaN` values in **8** out of the **16** columns) were also dropped, since they were ruled not reliable. This resulted in a significantly cleaner and more trustworthy dataset, with `6302` reports. In addition, column headers were cleaned using the `strip()` method.
 
 The resulting `(6302 x 16)` dataframe was saved as `sharks_clean.csv` and was used for further exploration and analysis. [^1]
 
@@ -95,11 +97,33 @@ Starting dataset: `sharks_clean.csv`.
 Outcome after extracting month and cleaning both month and country: `sharks_clean_month_country.csv`.
 
 ##### 3.1.1. Extracting and cleaning Month
-- The actual month of the shark attack report was extracted from the `Date` column using the RegEx `-(\w{3})-` and the `extract()` method to create a new `Month` column. 
+- The actual month of the shark attack report was extracted from the `Date` column using the **RegEx** `-(\w{3})-` and the `extract()` method to create a new `Month` column. 
 - When a row did not contain that pattern, the month was filled with `NaN`. Out of the `6302` initial rows, `910` contained missing values now. I was willing to sacrifice this rows, since they either did not contain the month or the annotation was deemed unreliable (i. e. "It happened after August 1800"). 
 - Rows with `NaN` in the `Month` column were removed, resulting in `5392` shark attack reports.
 
-For visualization purposes, months were then encoded using numbers `1-12`. Otherwise they would be ordered alphabetically in the x-axis of the plot.
+For visualization purposes, months were then encoded using numbers `1-12`. Otherwise they would be ordered alphabetically in the x-axis of the plot:
+
+```python
+# Creating a dictionary to store the old and new names for months:
+
+dict_months = {"jan" : 1,
+              "feb" : 2,
+              "mar" : 3,
+              "apr" : 4,
+              "may" : 5,
+              "jun" : 6,
+              "jul" : 7,
+              "aug" : 8,
+              "sep" : 9,
+              "oct" : 10,
+              "nov" : 11,
+              "dec" : 12              
+}
+
+# Replacing the name by value
+
+sharks_clean.replace({"Month" : dict_months}, inplace = True)
+```
 
 ##### 3.1.2. Cleaning Country
 - Rows with `NaN` in Country were removed. Result: `df.shape = (5361, 17)`.
@@ -114,7 +138,7 @@ For visualization purposes, months were then encoded using numbers `1-12`. Other
 ![Shark Season in Top 3 countries](./images/shark_season_countries.jpg)
 
 ##### Conclusions:
-- *'Shark Season'* actually reflects summer season in the northern hemisphere (USA) and southern hemisphere (Australia, South Africa). :upside_down_face:
+- *'Shark Season'* actually reflects **summer season** in the northern hemisphere (USA) and southern hemisphere (Australia, South Africa). :upside_down_face:
 - Most reports are observed during summer season due to people practicing  sea-related activities.
 <br/>
 
@@ -134,7 +158,7 @@ try:
 except Exception:
     sharks_clean['Year'] = sharks_clean['Year'].fillna(0).astype(int)
 ```
-- Rows with `NaN` in `Year` were removed. Result: `df.shape = (5352, 17)`.
+- Rows in which `Year == 0` were removed. Result: `df.shape = (5352, 17)`.
 
 ##### 3.3.2. Visualization: Worlwide reports
 - Worldwide reports were visualized using a histplot.
@@ -155,7 +179,7 @@ except Exception:
 ##### Conclusions: 
 - Since the last 20-40 years concentration of attack reports seems to start earlier (from Apr) and lasts longer in time (till Oct). This could be due to:
     - Ease to report cases.
-    - Summer season starts early due to **global warming**, leading to more attacks.
+    - Summer season starts earlier due to **global warming**, leading to more attacks.
 <br/>
 
 ##### 3.3.4. Visualization: Evolution of attacks in Australia in the last century
@@ -165,8 +189,28 @@ except Exception:
 ![Evolution of reports in Australia](./images/month_year_australia.jpg)
 
 ##### Conclusions:
-- Similar to USA, an increase in reports during *'winter'* months is observed in the last 20 years. **Global warming** is not a hoax!
+- Similar to USA, an increase in reports during *'winter'* months is observed in the last 20 years. **Global warming is not a hoax!**
 <br/>
+
+##### 3.3.5. Evolution of attacks in the Northern and Southern hemisphere
+- Created a list of the countries in each hemisphere.
+- Applied a function to rename the countries (in a new column) if they belonged to each of the lists (re-checked the `unique()` values).
+```python
+def hemisphere(x):
+    if x.lower() in south:
+        return "Southern"
+    elif x.lower() in north:
+        return "Northern"
+    else:
+        return x
+```
+- Created one dataframe for each hemisphere and visualized the evolution of reports `groupby` month.
+    - `northern.shape = (2931, 18)`. Image file: `month_year_northern.jpg`. 
+    - `southern.shape = (2365, 18)`. Image file: `month_year_southern.jpg`
+
+![Evolution in Northern](./images/month_year_northern.jpg)
+
+![Evolution in Southern](./images/month_year_southern.jpg)
 
 #### 3.4. Demographics
 Finally, some demographic investigation were conducted in order to visualize which age and gender accumulated more fatality reports.
@@ -183,6 +227,10 @@ Starting dataframe: `sharks_clean_activity_fatal.csv`.
 
 ![Age distribution and fatality](./images/age_fatality.jpg)
 
+##### Conclusions:
+- People that report shark attacks are young, since they are the ones practicing the abovementioned sports.
+<br/>
+
 ##### 3.4.2. Gender x Survivability
 Starting dataframe: `sharks_clean_activity_fatal.csv`.
 - 362 rows with `NaN` gender were removed.
@@ -192,3 +240,7 @@ Starting dataframe: `sharks_clean_activity_fatal.csv`.
 - Image file: `gender_fatality.jpg`.
 
 ![Gender and fatality](./images/gender_fatality.jpg)
+
+##### Conclusions:
+- Most shark attack reports accumulate in men. Might be interesting to visualize if this has been changin in recent years.
+<br/>
