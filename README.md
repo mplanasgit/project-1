@@ -4,9 +4,10 @@ Hello World! This is Marc Planas :)
 ```
 ---
 ## Top-10 (deathliest) activities to avoid during *'Shark Season'* 
-    Climate change is not a hoax
+    Climate change is not a hoax!
 
 ---
+### Main objective
 The aim of this project was:
 1. To identify the top 10 activities (sports) in which most of the shark attacks occur and investigate their survivability.
 
@@ -22,9 +23,14 @@ An analysis on the  `sharks.csv` dataset was conducted to investigate these issu
 ### 1. Data cleaning
 The process described below was performed in the following jupyter notebook: `my_project_cleaning_exploration.ipynb`
 
-The dimensions of the original dataset were: `25723 rows × 24 columns`, and almost all categories (columns) contained `~20,000 NaN` missing values. It also contained `2392 duplicated` reports (rows). Reports with `NaN` values in **all** columns and `duplicated` rows were dropped/removed, lowering the number of rows with potentially meaningful data to `6311`.
+- Dimensions of the original dataset: `25723 rows × 24 columns`
+- Almost all categories (columns) contained `~20,000 NaN` missing values.
+- The dataset also contained `2392 duplicated` reports (rows). 
+- Reports with `NaN` values in **all** columns and `duplicated` rows were dropped/removed, lowering the number of rows with potentially meaningful data to `6311`.
 
-After a closer inspection, it was decided to drop some of the categories that would not be useful for the scope of the analysis and which contained repetitive information. Columns dropped were: `pdf`, `href formula`, `href`, `original order`, `Unnamed: 22`, `Unnamed: 23`, `Case Number.1` and `Case Number.2`, lowering the number of columns to `16`. Then, reports in which **half** of the information was missing (i. e. `NaN` values in **8** out of the **16** columns) were also dropped, since they were ruled not reliable. This resulted in a significantly cleaner and more trustworthy dataset, with `6302` reports. In addition, column headers were cleaned using the `strip()` method.
+After a closer inspection, it was decided to drop some of the categories that would not be useful for the scope of the analysis and which contained repetitive information. Columns dropped were: `pdf`, `href formula`, `href`, `original order`, `Unnamed: 22`, `Unnamed: 23`, `Case Number.1` and `Case Number.2`, lowering the number of columns to `16`. 
+
+Then, reports in which **half** of the information was missing (i. e. `NaN` values in **8** out of the **16** columns) were also dropped, since they were ruled not reliable reports. This resulted in a significantly cleaner and more trustworthy dataset, with `6302` rows. In addition, column headers were cleaned using the `strip()` method.
 
 The resulting `(6302 x 16)` dataframe was saved as `sharks_clean.csv` and was used for further exploration and analysis. [^1]
 
@@ -38,7 +44,7 @@ An initial exploration was conducted using the `value_counts()` method to see th
 
 In addition, after inspecting the number of `NaN` in each column (the lower the better - more statistically powerfull), the following categories appeared good alternatives to investigate: 
 - Date/Year
-- Type (out of scope)
+- Type
 - Country/Area/Location
 - Activity
 - Injury/Fatal (Y/N) a.k.a survivability
@@ -142,10 +148,10 @@ sharks_clean.replace({"Month" : dict_months}, inplace = True)
 - Most reports are observed during summer season due to people practicing  sea-related activities.
 <br/>
 
-#### 3.3. 'Shark Season' by Country and Year - Climate Change (?)
-*'Shark Season'* might have looked different in the past due to:
+#### 3.3. 'Shark Season' by Country and Year
+*'Shark Season'* / summer season might have looked different in the past due to:
 - **Climate change / global warming**.
-- Increased ease to report attacks.
+- Increased ease to report attacks over the years.
 
 Starting dataframe: `sharks_clean_month_country.csv`
 Outcome after cleaning the year: `sharks_clean_month_country_year.csv`
@@ -166,36 +172,16 @@ except Exception:
 
 ![Shark Season in Top 3 countries](./images/shark_reports_year.jpg)
 
-##### Conclusions:
 - Most reports occur since year 1900, mainly due to increased ease in documenting the attacks (probably). Thus, in order to have more powerful data (the more reports the better) it makes sense to focus in this last century.
 <br/>
 
-##### 3.3.3. Visualization: Evolution of attacks in USA in the last century
-- A new dataframe was created (`sharks_clean_month_year_usa.csv`) selecting only those reports belonging to USA using filtering conditions. Result: `df.shape = (2049, 17)`.
-- Report were plotted `groupby` month and filtering each plot by spans of 20 years, from 1920 to 2018.
-- Image file: `month_year_USA.jpg`.
-![Evolution of reports in USA](./images/month_year_USA.jpg)
-
-##### Conclusions: 
-- Since the last 20-40 years concentration of attack reports seems to start earlier (from Apr) and lasts longer in time (till Oct). This could be due to:
-    - Ease to report cases.
-    - Summer season starts earlier due to **global warming**, leading to more attacks.
-<br/>
-
-##### 3.3.4. Visualization: Evolution of attacks in Australia in the last century
-- A similar process was followed for the second country with most reports and which is located in the southern hemisphere, Australia. The dataframe was saved as: `sharks_clean_month_year_australia.csv`.
-- Image file: `month_year_australia.jpg`.
-
-![Evolution of reports in Australia](./images/month_year_australia.jpg)
-
-##### Conclusions:
-- Similar to USA, an increase in reports during *'winter'* months is observed in the last 20 years. **Global warming is not a hoax!**
-<br/>
-
-##### 3.3.5. Evolution of attacks in the Northern and Southern hemisphere
+##### 3.3.3. Evolution of attacks in the Northern and Southern hemisphere
 - Created a list of the countries in each hemisphere.
-- Applied a function to rename the countries (in a new column) if they belonged to each of the lists (re-checked the `unique()` values).
+- Applied a function to rename the countries (in a new column) if they belonged to each of the lists (re-checked the `unique()` values). Data frame stored as: `sharks_clean_month_year_hemisphere.csv`.
 ```python
+south = ["country_1", "country_2", ...]
+north = ["country_3", "country_4", ...]
+
 def hemisphere(x):
     if x.lower() in south:
         return "Southern"
@@ -204,13 +190,43 @@ def hemisphere(x):
     else:
         return x
 ```
-- Created one dataframe for each hemisphere and visualized the evolution of reports `groupby` month.
+- Created one dataframe for each hemisphere and visualized the evolution of reports `groupby` month. Each line represents a span of 20 years (1940-2018).
     - `northern.shape = (2931, 18)`. Image file: `month_year_northern.jpg`. 
     - `southern.shape = (2365, 18)`. Image file: `month_year_southern.jpg`
 
 ![Evolution in Northern](./images/month_year_northern.jpg)
 
 ![Evolution in Southern](./images/month_year_southern.jpg)
+<br/>
+
+
+##### 3.3.4. Visualization: Evolution of attacks in USA in the last century
+- A new dataframe was created (`sharks_clean_month_year_usa.csv`) selecting only those reports belonging to USA using filtering conditions. Result: `df.shape = (2049, 17)`.
+- Report were plotted `groupby` month and filtering each plot by spans of 20 years, from 1940 to 2018.
+- Image file: `month_year_USA.jpg`.
+
+![Evolution of reports in USA](./images/month_year_USA.jpg)
+
+##### Conclusions: 
+- Since the last 20-40 years concentration of attack reports seems to start earlier (from Apr) and lasts longer in time (till Oct). This could be due to:
+    - Increased ease to report cases.
+    - Summer season starts earlier and lasts longer due to **global warming**, leading to more attacks.
+<br/>
+
+##### 3.3.5. Visualization: Evolution of attacks in Australia in the last century
+- A similar process was followed for the second country with most reports and which is located in the southern hemisphere, Australia. The dataframe was saved as: `sharks_clean_month_year_australia.csv`.
+- Image file: `month_year_australia.jpg`.
+
+![Evolution of reports in Australia](./images/month_year_australia.jpg)
+
+##### Conclusions:
+- Similar to USA, an increase in reports during *'winter'* months is observed in the last 20 years. **Global warming is not a hoax!**
+- This *long summer* effect is easily seen in the northern hemisphere.
+<br/>
+
+![Global warming in the Arctic](./images/global_warming_arctic.jpg)
+Further reading: [click here!](https://www.science.org/content/article/arctic-warming-four-times-faster-rest-world)
+<br/>
 
 #### 3.4. Demographics
 Finally, some demographic investigation were conducted in order to visualize which age and gender accumulated more fatality reports.
