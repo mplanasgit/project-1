@@ -258,5 +258,5 @@ Starting dataframe: `sharks_clean_activity_fatal.csv`.
 ![Gender and fatality](./images/gender_fatality.jpg)
 
 ##### Conclusions:
-- Most shark attack reports accumulate in men. Might be interesting to visualize if this has been changin in recent years.
+- Most shark attack reports accumulate in men. Might be interesting to visualize if this has been changing in recent years.
 <br/>
