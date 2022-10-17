@@ -1,10 +1,10 @@
 # Project-1
 ```python
-Hello World! This is Marc Planas :)
+"Hello World! This is Marc Planas :)"
 ```
 ---
-## Top-10 (deathliest) activities to avoid during *'Shark Season'* 
-    Climate change is not a hoax!
+## The sharks are warning us: Climate change is not a hoax!
+#####Top-10 (deathliest) activities to avoid during *'Shark Season'* 
 
 ---
 ### Main objective
@@ -25,12 +25,12 @@ The process described below was performed in the following jupyter notebook: `my
 
 - Dimensions of the original dataset: `25723 rows × 24 columns`
 - Almost all categories (columns) contained `~20,000 NaN` missing values.
-- The dataset also contained `2392 duplicated` reports (rows). 
-- Reports with `NaN` values in **all** columns and `duplicated` rows were dropped/removed, lowering the number of rows with potentially meaningful data to `6311`.
+- The dataset also contained 2392 duplicated reports (rows). 
+- Reports with `NaN` values in **all** columns and duplicated rows were dropped/removed, lowering the number of rows with potentially meaningful data to **6311**.
 
-After a closer inspection, it was decided to drop some of the categories that would not be useful for the scope of the analysis and which contained repetitive information. Columns dropped were: `pdf`, `href formula`, `href`, `original order`, `Unnamed: 22`, `Unnamed: 23`, `Case Number.1` and `Case Number.2`, lowering the number of columns to `16`. 
+After a closer inspection, it was decided to drop some of the categories that would not be useful for the scope of the analysis and which contained repetitive information. Columns dropped were: `pdf`, `href formula`, `href`, `original order`, `Unnamed: 22`, `Unnamed: 23`, `Case Number.1` and `Case Number.2`, lowering the number of columns to **16**. 
 
-Then, reports in which **half** of the information was missing (i. e. `NaN` values in **8** out of the **16** columns) were also dropped, since they were ruled not reliable reports. This resulted in a significantly cleaner and more trustworthy dataset, with `6302` rows. In addition, column headers were cleaned using the `strip()` method.
+Then, reports in which **half** of the information was missing (i. e. `NaN` values in **8** out of the **16** columns) were also dropped, since they were ruled not reliable reports. This resulted in a significantly cleaner and more trustworthy dataset, with **6302** rows. In addition, column headers were cleaned using the `strip()` method.
 
 The resulting `(6302 x 16)` dataframe was saved as `sharks_clean.csv` and was used for further exploration and analysis. [^1]
 
@@ -63,7 +63,7 @@ Outcome after cleaning and grouping: `sharks_clean_activity_fatal.csv`.
 - Cleaning inconsistencies: `lower()`, `strip()`, `replace()`.
 - Grouping activities using **RegEx:**
     - Dictionary with RegEx pattern as value.
-    - Iterate over the dictionary to `replace()` group similar activities.
+    - Iterate over the dictionary and `replace()` to group similar activities.
 
 ```python
 dict_activity_regex = {
@@ -146,6 +146,8 @@ sharks_clean.replace({"Month" : dict_months}, inplace = True)
 ##### Conclusions:
 - *'Shark Season'* actually reflects **summer season** in the northern hemisphere (USA) and southern hemisphere (Australia, South Africa). :upside_down_face:
 - Most reports are observed during summer season due to people practicing  sea-related activities.
+
+![](face_palm_gif.gif)
 <br/>
 
 #### 3.3. 'Shark Season' by Country and Year
@@ -225,7 +227,9 @@ def hemisphere(x):
 <br/>
 
 ![Global warming in the Arctic](./images/global_warming_arctic.jpg)
-Further reading: [click here!](https://www.science.org/content/article/arctic-warming-four-times-faster-rest-world)
+Further reading: [click here!](https://www.science.org/content/article/arctic-warming-four-times-faster-rest-world) (*just don't donate to the Science journal...*)
+<br/>
+![climate justice](climate-justice-climate-justice-now.gif)
 <br/>
 
 #### 3.4. Demographics
@@ -244,7 +248,7 @@ Starting dataframe: `sharks_clean_activity_fatal.csv`.
 ![Age distribution and fatality](./images/age_fatality.jpg)
 
 ##### Conclusions:
-- People that report shark attacks are young, since they are the ones practicing the abovementioned sports.
+- People that report shark attacks are young, since they are the ones that mostly practice the abovementioned sports.
 <br/>
 
 ##### 3.4.2. Gender x Survivability
@@ -258,5 +262,5 @@ Starting dataframe: `sharks_clean_activity_fatal.csv`.
 ![Gender and fatality](./images/gender_fatality.jpg)
 
 ##### Conclusions:
-- Most shark attack reports accumulate in men. Might be interesting to visualize if this has been changing in recent years.
+- Most shark attack reports accumulate in men. So, if you are a man in your 20s, just don't swim in summer :man_shrugging: (you can still surf though!).
 <br/>
