@@ -4,7 +4,7 @@
 ```
 ---
 ## The sharks are warning us: Climate change is not a hoax!
-#####Top-10 (deathliest) activities to avoid during *'Shark Season'* 
+##### Top-10 (deathliest) activities to avoid during *'Shark Season'* 
 
 ---
 ### Main objective
