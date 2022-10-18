@@ -1,17 +1,17 @@
-# Project-1
+# Ironhack Project-1
 ```python
 "Hello World! This is Marc Planas :)"
 ```
 ---
 ## The sharks are warning us: Climate change is not a hoax!
-##### Top-10 (deathliest) activities to avoid during *'Shark Season'* 
+##### Top-10 (deadliest) activities to avoid during *'Shark Season'* 
 
 ---
 ### Main objective
 The aim of this project was:
 1. To identify the top 10 activities (sports) in which most of the shark attacks occur and investigate their survivability.
 
-    > ***Hypothesis:** Since surfing is a very popular sport, most of the reports will be of people practicing it. However, since surfers are very aware of their surroundings, surf might not be the most deathliest activity.*  
+    > ***Hypothesis:** Since surfing is a very popular sport, most of the reports will be of people practicing it. However, since surfers are very aware of their surroundings, surf might not be the most deadliest activity.*  
 
 2. To identify a so called *'Shark Season'* based on the number of reports per month and country and investigate whether it has changed over the past years. This might give us insights on the migratory patterns of these animals.
 
@@ -54,7 +54,7 @@ In addition, after inspecting the number of `NaN` in each column (the lower the 
 ### 3. Data analysis
 The process described below was performed in the following jupyter notebook: `my_project_analysis.ipynb`
 
-#### 3.1. Top 10 (deathliest) activities
+#### 3.1. Top 10 (deadliest) activities
 Starting dataset: `sharks_clean.csv`.
 Outcome after cleaning and grouping: `sharks_clean_activity_fatal.csv`.
 
@@ -92,7 +92,7 @@ for key, value in dict_activity_regex.items():
 - Countplot of top 10 activities/sports, using the fatal category as `hue`.
 - Image file: `activity_fatality.jpg`
 
-![Top deathliest activities](./images/activity_fatality.jpg)
+![Top deadliest activities](./images/activity_fatality.jpg)
 
 ##### Conclusions:
 - Although board-related sports represent most of the reports of shark attacks, the fatality concentrates on swimmers, which have less tools to escape the attack or are less aware of their surroundings.
